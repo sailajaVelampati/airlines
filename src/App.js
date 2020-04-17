@@ -1,14 +1,14 @@
 import React from "react";
-import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
-import Login from "./components/Login";
-import { Home, a, b } from "./components/Home";
-import Header from "./components/Header";
+import { Route, Switch, Redirect, useHistory } from "react-router-dom";
+import { Login } from "./components/login";
+import { Home } from "./components/home";
 export const AuthContext = React.createContext();
+localStorage.clear();
 const initialState = {
   isAuthenticated: false,
   user: null,
   token: null,
-  role: "admin"
+  role: "admin",
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -21,30 +21,31 @@ const reducer = (state, action) => {
         isAuthenticated: true,
         user: action.payload.user,
         token: action.payload.token,
-        role: action.payload.role
+        role: action.payload.role,
       };
     case "LOGOUT":
       localStorage.clear();
+      useHistory().push("/");
       return {
         ...state,
         isAuthenticated: false,
-        user: null
+        user: null,
+        token: null,
+        role: null,
       };
     default:
       return state;
   }
 };
-function App({ history }) {
+function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   return (
     <AuthContext.Provider
       value={{
         state,
-        dispatch
+        dispatch,
       }}
     >
-      {/* <Header /> */}
-
       <div className="container-fluid">
         {/* {!state.isAuthenticated ? <Login /> : <Home />} */}
         <Switch>
@@ -56,18 +57,21 @@ function App({ history }) {
             //   return !state.isAuthenticated ? <Login /> : <Home />;
             // }}
           >
-            {!state.isAuthenticated ? (
-              <Login />
-            ) : (
-              // <Redirect to="/home/flights" />
+            {state.isAuthenticated && localStorage.getItem("token") ? (
               <Home />
+            ) : (
+              <Login />
             )}
           </Route>
           <Route
             path="/home"
             // component={`${state.isAuthenticated ? Login : Home}`}
           >
-            {!state.isAuthenticated ? <Login /> : <Home />}
+            {state.isAuthenticated && localStorage.getItem("token") ? (
+              <Home />
+            ) : (
+              <Login />
+            )}
           </Route>
         </Switch>
       </div>
