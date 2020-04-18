@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -9,34 +9,17 @@ import Paper from "@material-ui/core/Paper";
 import FlightTableRow from "./flightTableRow";
 import useStyles from "../commonComponents/style";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { flightTableCol } from "../constant";
 export default function FlightsTable() {
   const classes = useStyles();
   const ReduxDispatch = useDispatch();
-  const flightsReducer = useSelector((state) => {
-    console.log("useSelector", state);
-    if (state.flight) {
-      return state.flight;
-    } else {
-      return [];
-    }
-  }, shallowEqual);
-  const [flights, setFlights] = useState([]);
-
+  const flights = useSelector((state) => state.flight, shallowEqual);
   useEffect(() => {
-    console.log(flightsReducer);
-    if (flightsReducer.length) {
-      setFlights(flightsReducer);
-    } else {
-      ReduxDispatch({ type: "GET_FLIGHTS_LIST" });
-    }
-  }, [flightsReducer]);
+    ReduxDispatch({ type: "GET_FLIGHTS_LIST" });
+  }, []);
 
   const handleDelete = (index) => {
-    console.log("index :", index);
     ReduxDispatch({ type: "DELETE_FLIGHT", flightId: index });
-    // let array = [...flights];
-    // array.splice(index, 1);
-    // setFlights(array);
   };
   const handleSave = (ancillaryServices, meals, shopping, index) => {
     let updateRow = JSON.parse(JSON.stringify(flights[index]));
@@ -44,19 +27,7 @@ export default function FlightsTable() {
     updateRow.meals = meals;
     updateRow.shopping = shopping;
     ReduxDispatch({ type: "UPDATED_FLIGHTLIST", data: updateRow });
-    // let array = [...flights];
-    // array[index] = row;
-    // setFlights(array);
   };
-  const flightTableCol = [
-    "Flight Number",
-    "Time",
-    "From / To",
-    "Ancillary Services",
-    "Meal",
-    "Shopping",
-    "Action",
-  ];
 
   return (
     <TableContainer component={Paper}>

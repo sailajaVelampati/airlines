@@ -11,7 +11,6 @@ export function* getFlightList() {
   });
 }
 export function* saveFlightDetails({ data }) {
-  console.log(data);
   const response = yield call(fetch, baseUrl + data.id, {
     method: "PUT", // POST for create, PUT to update when id already exists.
     headers: { "content-type": "application/json" },
@@ -21,7 +20,6 @@ export function* saveFlightDetails({ data }) {
 }
 
 export function* deleteFlight({ flightId }) {
-  console.log("this", flightId);
   const response = yield call(fetch, baseUrl + flightId, { method: "DELETE" });
   if (response.status) yield put({ type: "GET_FLIGHTS_LIST" });
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect, useHistory } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import { Login } from "./components/login";
 import { Home } from "./components/home";
 export const AuthContext = React.createContext();

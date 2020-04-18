@@ -49,7 +49,6 @@ export const Login = () => {
     });
   };
   const handleFormSubmit = () => {
-    console.log("form submit called");
     setData({
       ...data,
       isSubmitting: true,

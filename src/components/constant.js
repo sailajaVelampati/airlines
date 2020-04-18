@@ -94,3 +94,12 @@ export const Shopping = [
   "Water Bottle",
   "Dairy",
 ];
+export const flightTableCol = [
+  "Flight Number",
+  "Time",
+  "From / To",
+  "Ancillary Services",
+  "Meal",
+  "Shopping",
+  "Action",
+];

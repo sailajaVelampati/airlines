@@ -7,24 +7,22 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import DropdownWidget from "../commonComponents/DropdownWidget";
 import CancelIcon from "@material-ui/icons/Cancel";
 import PropTypes from "prop-types";
+import { AncillaryServices, Meals, Shopping } from "../constant";
 
 const FlightTableRow = (props) => {
   const { row, index, handleDelete, handleSave } = props;
   const [isEditable, setIsEditable] = useState(false);
-  const [ancillaryServices, setAncillaryServices] = useState([
-    ...row.AncillaryServices,
-  ]);
-  const [meals, setMeals] = useState([...row.meals]);
-  const [shopping, setShopping] = useState([...row.shopping]);
+  const [ancillaryServices, setAncillaryServices] = useState(
+    row.ancillaryServices
+  );
+  const [meals, setMeals] = useState(row.meals);
+  const [shopping, setShopping] = useState(row.shopping);
 
   const handleEdit = () => {
     setIsEditable(true);
   };
   const handleSaveChild = () => {
     setIsEditable(false);
-    // row.AncillaryServices = ancillaryServices;
-    // row.meals = meals;
-    // row.shopping = shopping;
     handleSave(ancillaryServices, meals, shopping, index);
   };
 
@@ -44,13 +42,13 @@ const FlightTableRow = (props) => {
   };
   const rowText = [
     row.flightNo,
-    row.time,
+    new Date(row.time).toLocaleString(),
     `${row.from} / ${row.to}`,
     !isEditable ? (
-      row.AncillaryServices.join(",")
+      ancillaryServices.join(",")
     ) : (
       <DropdownWidget
-        options={["wheel chair", "infant"]}
+        options={AncillaryServices}
         initalValues={ancillaryServices}
         onValueChange={handleChangeAServices}
         lableName="Ancillary Services"
@@ -61,7 +59,7 @@ const FlightTableRow = (props) => {
       row.meals.join(",")
     ) : (
       <DropdownWidget
-        options={row.meals}
+        options={Meals}
         initalValues={meals}
         onValueChange={handleChangeMeal}
         lableName="Meals"
@@ -72,7 +70,7 @@ const FlightTableRow = (props) => {
       row.shopping.join(",")
     ) : (
       <DropdownWidget
-        options={row.shopping}
+        options={Shopping}
         initalValues={shopping}
         onValueChange={handleChangeShopping}
         lableName="Shopping"

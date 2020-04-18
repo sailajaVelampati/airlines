@@ -25,6 +25,7 @@ const FlightDetails = (props) => {
 
   const handleChange = (value) => {
     setSelectedFlight(value);
+    handleFlightSelectChange();
   };
   return (
     <>
@@ -45,7 +46,7 @@ const FlightDetails = (props) => {
       <DropdownWidget
         options={AvalableFlights}
         initalValues={selectedFlight}
-        onValueChange={handleFlightSelectChange}
+        onValueChange={handleChange}
         lableName="Select Flight"
         multiple={false}
       />
@@ -55,6 +56,7 @@ const FlightDetails = (props) => {
 
 FlightDetails.propTypes = {
   data: PropTypes.object.isRequired,
+  handleFlightSelectChange: PropTypes.func,
 };
 
 export default FlightDetails;

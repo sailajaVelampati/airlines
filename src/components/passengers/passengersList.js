@@ -10,7 +10,7 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import PropTypes from "prop-types";
 import DropdownWidget from "../commonComponents/DropdownWidget";
-import { SeatNo } from "../constant";
+
 const PassengerList = (props) => {
   const {
     data,
@@ -143,5 +143,6 @@ PassengerList.propTypes = {
   AncillaryServices: PropTypes.array,
   Meals: PropTypes.array,
   Shopping: PropTypes.array,
+  Seats: PropTypes.array.isRequired,
 };
 export default PassengerList;

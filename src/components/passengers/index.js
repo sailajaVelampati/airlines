@@ -14,14 +14,11 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux";
 export default function PassengerTable() {
   const classes = useStyles();
   const ReduxDispatch = useDispatch();
-  const flightsPassengerReducer = useSelector((state) => {
-    if (Object.keys(state.passenger).length) {
-      return state.passenger;
-    } else {
-      return {};
-    }
-  }, shallowEqual);
   const [flightData, setFlightData] = useState({});
+  const flightsPassengerReducer = useSelector(
+    (state) => state.passenger,
+    shallowEqual
+  );
 
   useEffect(() => {
     if (flightsPassengerReducer) {
